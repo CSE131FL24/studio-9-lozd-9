@@ -10,7 +10,7 @@ public class Polynomial {
 	 * Constructs a Polynomial with no terms yet.
 	 */
 	public Polynomial() {
-		//FIXME
+		list = new LinkedList<Double>();
 	}
 
 	
@@ -20,7 +20,7 @@ public class Polynomial {
 	 * @return polynomial with added term
 	 */
 	public void addTerm(double coeff) {
-		//FIXME
+		list.add(coeff);
 	}
 	
 	/*
@@ -29,7 +29,18 @@ public class Polynomial {
 	 * Cx^N + Cx^N-1 + ... + Cx + C
 	 */
 	public String toString() {
-		return ""; //FIXME
+		String token = "";
+		int coeff = list.size()-1;
+		for(Double e: list) {
+			if(coeff!=0) {
+				token = token + e+"x^"+coeff+" + ";
+				coeff--;
+			}else {
+				token = token + e;
+			}
+			
+		}
+		return token;
 	}
 	
 	/**
@@ -38,12 +49,41 @@ public class Polynomial {
 	 * @return value of polynomial at that x
 	 */
 	public double evaluate(double x) {
-		return 0;//FIXME
+		double token = 0;
+		int coeff = list.size()-1;
+		for(Double e: list) {
+			if(coeff!=0) {
+				token = token + e*Math.pow(x, coeff);
+				coeff--;
+			}else {
+				token = token + e;
+			}
+			
+		}
+		return token;
 	}
 
 	
 	public Polynomial derivative() {
-		return null;//FIXME
+		double coeff = list.size()-1;
+		
+		LinkedList<Double> newList = new LinkedList<Double>();
+		
+		for(int i=0;i<list.size();i++) {
+			if(coeff == 0) {
+				break;
+			}
+			double val = list.get(i);
+			newList.addLast(val*coeff);
+			coeff--;
+		}
+		
+		Polynomial e = new Polynomial();
+		for(Double term:newList) {
+			e.addTerm(term);
+
+		}
+		return e;
 	}
 	
 
